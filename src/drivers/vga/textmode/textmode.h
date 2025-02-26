@@ -1,0 +1,55 @@
+#ifndef __TEXTMODE_H
+#define __TEXTMODE_H
+
+#include <libc/stdlib.h>
+#include <kernel/port.h>
+#include <drivers/vga/vga.h>
+
+#define VGA_WIDTH ((uint16_t)80)
+#define VGA_HEIGHT 25
+#define VGA_BASEADDR 0xB8000
+#define CRTC_ADDR_REG 0x3D4
+#define CRTC_DATA_REG 0x3D5
+#define CURSOR_HIGHPTR 0x0E
+#define CURSOR_LOWPTR 0x0F
+
+struct cursor_t {
+    uint8_t x;
+    uint8_t y;
+};
+
+struct screen_t {
+    struct cursor_t cur;
+    volatile uint16_t* vga_buffer;
+    uint8_t text_color;
+};
+
+typedef enum {
+    BLACK = 0,
+    BLUE = 1,
+    GREEN = 2,
+    CYAN = 3,
+    RED = 4,
+    MAGENTA = 5,
+    BROWN = 6,
+    LIGHT_GREY = 7,
+    DARK_GREY = 8,
+    LIGHT_BLUE = 9,
+    LIGHT_GREEN = 10,
+    LIGHT_CYAN = 11,
+    LIGHT_RED = 12,
+    LIGHT_MAGENTA = 13,
+    YELLOW = 14,
+    WHITE = 15
+} __attribute__((packed)) vga_color_t;
+
+void vga_cursor_toggle(void);
+VGA_DEFINE0(textmode_init); // void vga_textmode_init(void);
+VGA_DEFINE0(textmode_clear);
+void vga_textmode_setcolor(vga_color_t, vga_color_t);
+void vga_textmode_setcursor(uint8_t, uint8_t);
+void vga_textmode_getcursor(uint8_t*, uint8_t*);
+void vga_textmode_putchar(char);
+void vga_textmode_puts(const char*);
+
+#endif // __TEXTMODE_H
