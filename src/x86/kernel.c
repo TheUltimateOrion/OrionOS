@@ -1,5 +1,5 @@
 
-#include <drivers/vga/textmode/textmode.h>
+#include <orion/drivers/vga.h>
 
 void kmain(void);
 

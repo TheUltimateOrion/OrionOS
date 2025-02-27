@@ -1,17 +1,22 @@
-#ifndef __TEXTMODE_H
-#define __TEXTMODE_H
+#ifndef __VGA_H
+#define __VGA_H
 
-#include <libc/stdlib.h>
-#include <kernel/port.h>
-#include <drivers/vga/vga.h>
+#include <orion/stdlib.h>
+#include <orion/arch/x86.h>
 
-#define VGA_WIDTH ((uint16_t)80)
-#define VGA_HEIGHT 25
+#define VGA_DEFINEx(func, ...) void FASTCALL vga_##func(__VA_ARGS__)
+#define VGA_DEFINE0(func) VGA_DEFINEx(func, void)
+#define VGA_DEFINE1(func, _A) void FASTCALL vga_##func(_A);
+#define VGA_DEFINE2(func, _A, _B) void FASTCALL vga_##func(_B)
+
+#define VGA_WIDTH (uint16_t)80
+#define VGA_HEIGHT (uint16_t)25
 #define VGA_BASEADDR 0xB8000
 #define CRTC_ADDR_REG 0x3D4
 #define CRTC_DATA_REG 0x3D5
 #define CURSOR_HIGHPTR 0x0E
 #define CURSOR_LOWPTR 0x0F
+
 
 struct cursor_t {
     uint8_t x;
@@ -52,4 +57,4 @@ void vga_textmode_getcursor(uint8_t*, uint8_t*);
 void vga_textmode_putchar(char);
 void vga_textmode_puts(const char*);
 
-#endif // __TEXTMODE_H
+#endif // __VGA_H

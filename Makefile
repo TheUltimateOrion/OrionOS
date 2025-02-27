@@ -1,4 +1,5 @@
 SRC_DIR   := src
+INCLUDE_DIR := include
 OBJ_DIR := obj
 OUT_DIR := out
 
@@ -33,7 +34,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.asm | $(OBJ_DIR)
 	$(AS) $(ASFLAGS) $@ $<  
  
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CCFLAGS) $@ -I $(SRC_DIR) $<
+	$(CC) $(CCFLAGS) $@ -I $(INCLUDE_DIR) $<
 
 $(OBJ_DIR):
 	mkdir -p $(subst $(SRC_DIR), $(OBJ_DIR), $(dir $(SRCS)))

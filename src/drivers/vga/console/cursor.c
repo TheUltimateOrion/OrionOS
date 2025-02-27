@@ -1,4 +1,5 @@
-#include "textmode.h"
+#include <orion/drivers/vga.h>
+#include <orion/arch/x86.h>
 
 extern struct screen_t* screen;
 

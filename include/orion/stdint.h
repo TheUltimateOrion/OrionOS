@@ -11,6 +11,8 @@ typedef short int16_t;
 typedef int int32_t;
 typedef long int int64_t;
 
+typedef unsigned long int size_t;
+
 void itoa(int n, char *str);
 
 #endif
