@@ -27,4 +27,6 @@ void *memset(void*, int32_t, size_t);
 void *memmove(void*, const void*, size_t);
 int32_t memcmp(const void *, const void*, size_t);
 
+#define FASTCALL __attribute__((fastcall))
+
 #endif // __TYPES_H
