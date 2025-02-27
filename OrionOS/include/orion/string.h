@@ -1,7 +1,7 @@
 #ifndef __LIB_STRING_H
 #define __LIB_STRING_H
 
-#include <orion/stdint.h>
+#include <orion/types.h>
 
 void reverse(char*);
 size_t strlen(char*);

@@ -1,9 +1,9 @@
 #ifndef __STDLIB_H
 #define __STDLIB_H
 
-#include <orion/stdint.h>
-#include <orion/stdbool.h>
-#include <orion/string.h>
+#include <orion/types.h>
+#include <orion/types.h>
+#include <orion/types.h>
 
 #define FASTCALL __attribute__((fastcall))
 
