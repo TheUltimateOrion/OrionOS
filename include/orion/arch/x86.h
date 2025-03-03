@@ -12,16 +12,4 @@ struct gdt_entry_t {
     uint8_t base_high;
 } __attribute__((packed));
 
-static inline void outb(uint16_t port, uint8_t val) {
-    asm volatile ("outb %0, %1" : : "a"(val), "Nd"(port));
-}
-
-static inline uint8_t inb(uint16_t port) {
-    uint8_t returnVal;
-    asm volatile ("inb %1, %0"
-    : "=a"(returnVal)
-    : "Nd"(port));
-    return returnVal;
-}
-
 #endif // __ARCH_x86_H

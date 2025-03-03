@@ -2,7 +2,7 @@
 #include <orion/types.h>
 #include <orion/types.h>
 
-void itoa(int32_t N, char *str) {
+void itoa(int64_t N, char *str) {
     int i = 0;
     bool isNegative = false;
  

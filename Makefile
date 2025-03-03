@@ -7,9 +7,9 @@ AS := nasm
 ASFLAGS := -f elf32 -o
 
 CC := gcc
-CCFLAGS := -m32 -c -ffreestanding -fno-builtin -funsigned-char -O2 -nostdlib -fdiagnostics-color=auto -fdiagnostics-show-option \
--Wall -Wextra -Werror -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wpointer-arith -Wcast-align -Wstrict-prototypes -Wundef \
--Wredundant-decls -Wmissing-prototypes -Wstack-usage=1024 -g3 -ggdb -nostdinc -o
+CCFLAGS := -m32 -c -std=gnu99 -ffreestanding -fno-builtin -funsigned-char -O2 -nostdlib -fdiagnostics-color=auto -fdiagnostics-show-option \
+-Wall -Wextra -Werror -Wconversion -Wsign-conversion -Wshadow -Wpointer-arith -Wcast-align -Wstrict-prototypes -Wundef \
+-Wno-unused-parameter -Wredundant-decls -Wmissing-prototypes -Wstack-usage=1024 -g3 -ggdb -nostdinc -o
 
 LD := ld
 LDFLAGS := -m elf_i386 -T link.ld -o
@@ -25,6 +25,7 @@ BIN := iso/boot/kernel.bin
 all: $(OBJS) $(BIN)
 
 image: $(BIN)
+	rm -rf $(OUT_DIR)/bootable.iso
 	$(GRUBISO) $(GRUBFLAGS) $(OUT_DIR)/bootable.iso iso
 
 $(BIN): $(OBJS) | $(OBJ_DIR)

@@ -1,4 +1,5 @@
 #include <orion/drivers/vga.h>
+#include <orion/arch/asm.h>
 
 struct screen_t* screen;
 
@@ -6,18 +7,18 @@ static void __newline(void);
 static uint16_t __vga_char(char, uint8_t);
 static void __cursor_update(void);
 
-// void vga_textmode_init(void) {
+// void vga_console_init(void) {
 
-VGA_DEFINE0(textmode_init) { 
+VGA_DEFINE0(console_init) { 
     screen->vga_buffer = (uint16_t*) VGA_BASEADDR;
 	screen->cur.x = 0;
 	screen->cur.y = 0;
 	screen->text_color = (LIGHT_GREY | (BLACK << 4));
-	vga_textmode_clear();
+	vga_console_clear();
 }
 
-VGA_DEFINE0(textmode_clear) {
-	vga_textmode_setcolor(LIGHT_GREY, BLACK);
+VGA_DEFINE0(console_clear) {
+	vga_console_setcolor(LIGHT_GREY, BLACK);
     for (uint16_t i = 0; i < VGA_WIDTH * VGA_HEIGHT; i++) {
         screen->vga_buffer[i] = __vga_char(' ', screen->text_color);
     }
@@ -26,11 +27,11 @@ VGA_DEFINE0(textmode_clear) {
     __cursor_update();
 }
 
-void vga_textmode_setcolor(vga_color_t fg, vga_color_t bg) {
+VGA_DEFINE2(console_setcolor, vga_color_t fg, vga_color_t bg) {
     screen->text_color = fg | (bg << 4);
 }
 
-void vga_textmode_putchar(char c) {
+VGA_DEFINE1(console_putchar, char c) {
 	if(c == '\n') {
 		__newline();
 	} else {
@@ -42,13 +43,13 @@ void vga_textmode_putchar(char c) {
     __cursor_update();
 }
 
-void vga_textmode_puts(const char* str) {
+VGA_DEFINE1(console_write, const char* str) {
     while(*str != '\0') {
-		vga_textmode_putchar(*str++);
+		vga_console_putchar(*str++);
 	}
 }
 
-static uint16_t __vga_char(char c, uint8_t color) {
+static inline uint16_t __vga_char(char c, uint8_t color) {
 	return (uint16_t)(c | (color << 8));
 }
 

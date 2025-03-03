@@ -1,5 +1,6 @@
 #include <orion/drivers/vga.h>
 #include <orion/arch/x86.h>
+#include <orion/arch/asm.h>
 
 extern struct screen_t* screen;
 
@@ -12,13 +13,13 @@ void vga_cursor_toggle(void) {
 	outb(CRTC_DATA_REG, prev ^ (0x1 << 5));
 }
 
-void vga_textmode_setcursor(uint8_t x, uint8_t y) {
+VGA_DEFINE2(console_setcursor, uint8_t x, uint8_t y) {
     screen->cur.x = x;
     screen->cur.y = y;
     __cursor_update();
 }
 
-void vga_textmode_getcursor(uint8_t* x, uint8_t* y) {
+VGA_DEFINE2(console_getcursor, uint8_t* x, uint8_t* y) {
     *x = screen->cur.x;
     *y = screen->cur.y;
 }

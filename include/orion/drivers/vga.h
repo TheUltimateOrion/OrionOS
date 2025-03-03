@@ -6,8 +6,8 @@
 
 #define VGA_DEFINEx(func, ...) void FASTCALL vga_##func(__VA_ARGS__)
 #define VGA_DEFINE0(func) VGA_DEFINEx(func, void)
-#define VGA_DEFINE1(func, _A) void FASTCALL vga_##func(_A);
-#define VGA_DEFINE2(func, _A, _B) void FASTCALL vga_##func(_B)
+#define VGA_DEFINE1(func, _A) void FASTCALL vga_##func(_A)
+#define VGA_DEFINE2(func, _A, _B) void FASTCALL vga_##func(_A, _B)
 
 #define VGA_WIDTH (uint16_t)80
 #define VGA_HEIGHT (uint16_t)25
@@ -49,12 +49,12 @@ typedef enum {
 } __attribute__((packed)) vga_color_t;
 
 void vga_cursor_toggle(void);
-VGA_DEFINE0(textmode_init); // void vga_textmode_init(void);
-VGA_DEFINE0(textmode_clear);
-void vga_textmode_setcolor(vga_color_t, vga_color_t);
-void vga_textmode_setcursor(uint8_t, uint8_t);
-void vga_textmode_getcursor(uint8_t*, uint8_t*);
-void vga_textmode_putchar(char);
-void vga_textmode_puts(const char*);
+VGA_DEFINE0(console_init); // void vga_console_init(void);
+VGA_DEFINE0(console_clear);
+VGA_DEFINE2(console_setcolor, vga_color_t, vga_color_t); // void vga_console_setcolor(vga_color_t, vga_color_t);
+VGA_DEFINE2(console_setcursor, uint8_t, uint8_t); // void vga_console_setcursor(uint8_t, uint8_t);
+VGA_DEFINE2(console_getcursor, uint8_t*, uint8_t*); //void vga_console_getcursor(uint8_t*, uint8_t*);
+VGA_DEFINE1(console_putchar, char); //void vga_console_putchar(char);
+VGA_DEFINE1(console_write, const char*); //void vga_console_puts(const char*);
 
 #endif // __VGA_H
